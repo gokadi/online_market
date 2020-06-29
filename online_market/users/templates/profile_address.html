@@ -1,0 +1,36 @@
+{% extends 'contrib/base.html' %}
+{% load static profile_sidebar %}
+
+{% block extra_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/users/register.css' %}">
+{% endblock %}
+
+{% block page_sidebar %}
+    {% profile_sidebar request %}
+{% endblock %}
+
+{% block page_body %}
+    <main>
+        <h2 class="register-title">Адрес</h2>
+        <form class="register-content js-register-content" action="{% url 'users:profile_address' %}" method="post">
+            {% csrf_token %}
+            {% if is_updated %}
+                <p>Данные обновлены</p>
+            <p class="js-form-message"></p>
+            {% else %}
+                {% for field in form %}
+                    <p>
+                        {{ field.label_tag }}
+                        <br>
+                        {{ field }}
+                        {% for error in field.errors %}
+                            <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                    </p>
+                {% endfor %}
+                <button class="js-profile-submit" type="submit">Обновить</button>
+            {% endif %}
+        </form>
+    </main>
+{% endblock %}
+

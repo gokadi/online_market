@@ -1,0 +1,64 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/contrib/header.css' %}">
+
+<header>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <nav class="navbar-nav -primary">
+                {% for item in items %}
+                    {% include 'contrib/nav-item.html' with item=item %}
+                {% endfor %}
+            </nav>
+            <div class="navbar-nav">
+                <a
+                    href="{% url 'carts:cart_view' %}"
+                    class="btn -xs btn--secondary common-btn"
+                >
+                    <span class="btn__text">
+                        Корзина
+                    </span>
+                </a>
+                {% if user.is_authenticated %}
+                    {% if user.is_staff %}
+                        <a class="btn -xs" href="/admin/">
+                           <span class="btn__text">
+                               Панель админа
+                           </span>
+                        </a>
+                    {% endif %}
+                    <a class="btn -xs" href="{% url 'users:profile_contacts' %}">
+                        <span class="btn__text">
+                            Профиль
+                        </span>
+                    </a>
+                    <a
+                        href="{% url 'users:logout' %}"
+                        class="btn -xs btn--secondary login-btn"
+                    >
+                        <span class="btn__text login-btn__text">
+                            Выйти
+                        </span>
+                    </a>
+                {% else %}
+                    <a
+                        href="{% url 'users:login' %}"
+                        class="btn -xs btn--secondary login-btn"
+                    >
+                        <span class="btn__text login-btn__text">
+                            Войти
+                        </span>
+                    </a>
+                    <a
+                        href="{% url 'users:register' %}"
+                        class="btn -xs register-btn"
+                    >
+                        <span class="btn__text login-btn__text">
+                            Регистрация
+                        </span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</header>

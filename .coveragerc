@@ -1,0 +1,17 @@
+[run]
+branch = True
+source =
+    ./online_market/
+omit =
+    */urls.py
+    */apps.py
+    */migrations/*
+    */tests/*
+    */management/*
+
+    ./online_market/wsgi.py
+    ./online_market/settings.py
+
+[report]
+precision = 2
+fail_under = 100

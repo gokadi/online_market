@@ -1,0 +1,39 @@
+.order-content {
+    font-size: 16px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 30px;
+}
+
+.order-title {
+    text-align: center;
+}
+
+.order {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.order-make-order-btn {
+    text-decoration: none;
+    background-color: #eee;
+    color: #333;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    border-left: 1px solid #ccc;
+    margin-left: 60px;
+    cursor: pointer;
+}
+
+.order-products {
+    margin-bottom: 20px;
+}
+
+.order-products, .order-products th, .order-products td {
+    border: 1px solid black;
+}

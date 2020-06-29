@@ -1,0 +1,121 @@
+{% extends 'contrib/base.html' %}
+{% load static %}
+
+{% block extra_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/products/catalog.css' %}">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position: absolute; width: 0; height: 0">
+        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="icon-cart"><path d="M13 8c.4 0 .7-.2.9-.6l2-4c.2-.3.1-.7 0-1S15.3 2 15 2H5c0-1.1-.9-2-2-2H0v2h3v9c0 .6.4 1 1 1h10c.6 0 1-.4 1-1s-.4-1-1-1H5V8h8z"></path><circle cx="4.5" cy="14.5" r="1.5"></circle><circle cx="13.5" cy="14.5" r="1.5"></circle></symbol>
+    </svg>
+{% endblock %}
+
+{% block page_body %}
+    <main>
+        <div class="catalog-content">
+            <h2 class="catalog-content-title">
+                Каталог
+            </h2>
+            {% csrf_token %}
+            <div class="products">
+                {% if not products %}
+                    <p>В данной категории отсутствуют товары</p>
+                {% endif %}
+                {% for product in products %}
+                    <div class="product-card js-product-card" data-product-id="{{ product.pk }}">
+                        <div class="product-tumb">
+                            <img src="{% get_media_prefix %}{{ product.image }}" alt="">
+                        </div>
+                        <div class="product-details">
+                            <p>{{ product.name }}</p>
+                            <div class="product-bottom-details">
+                                <div class="product-price">{{ product.price }}₽</div>
+                                <div class="product-links">
+                                    <a class="js-link" data-product-id="{{ product.pk }}" href="">
+                                        <svg class="icon searchbar__upgrade__icon">
+                                            <use href="#icon-cart"></use>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% for product in products %}
+                <div class="overlay hidden js-product-description js-product-description-{{ product.pk }}">
+                    <div class="product-details-modal">
+                        <h4 class="popover-heading">
+                            {{ product.name }}
+                        </h4>
+                        <div class="product-details-tumb" data-product-id="{{ product.pk }}">
+                            <img src="{% get_media_prefix %}{{ product.image }}" alt="">
+                        </div>
+                        <div class="popover-body">
+                            {{ product.description }}
+                        </div>
+                        <div class="product-bottom-details">
+                            <div class="product-price">{{ product.price }}₽</div>
+                            <div class="product-links">
+                                <a class="js-link" data-product-id="{{ product.pk }}" href="">
+                                    Добавить в корзину
+                                    <svg class="icon searchbar__upgrade__icon">
+                                        <use href="#icon-cart"></use>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="add-to-cart-info hidden js-add-to-cart">
+            <div class="add-to-cart-info-modal">Товар добавлен в корзину</div>
+        </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const productCards = document.querySelectorAll('.js-product-card');
+            productCards.forEach((card) => {
+                const productId = card.getAttribute('data-product-id');
+                const productLinks = card.querySelector('.js-link');
+                const descriptionPopover = document.querySelector(
+                  '.js-product-description-' + productId
+                );
+                document.addEventListener('click', (event) => {
+                  if (
+                    card.contains(event.target)
+                    && !productLinks.contains(event.target)
+                  ) {
+                    descriptionPopover.classList.remove('hidden');
+                  } else {
+                    descriptionPopover.classList.add('hidden');
+                  }
+                });
+            });
+
+            const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0];
+            const addToCart = document.querySelectorAll('.js-link');
+            addToCart.forEach((link) => {
+                const productId = link.getAttribute('data-product-id');
+                link.addEventListener('click', async (e) => {
+                  e.preventDefault();
+                  const formData = new FormData();
+                  formData.append('csrfmiddlewaretoken', csrfToken.value);
+                  formData.append('product_id', productId);
+
+                  const response = await fetch('{% url 'carts:add' %}', {
+                    method: 'POST',
+                    mode: 'same-origin',
+                    cache: 'no-cache',
+                    body: formData,
+                  });
+
+                  if (response.status !== 201) {
+                    throw new Error(await response.text());
+                  } else {
+                    alert('Товар добавлен');
+                  }
+                });
+            });
+        });
+    </script>
+    </main>
+{% endblock %}

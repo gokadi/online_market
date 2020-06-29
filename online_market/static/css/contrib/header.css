@@ -1,0 +1,81 @@
+.navbar {
+  background-color: #2f3439;
+  color: #fff;
+  height: 60px;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+.navbar-inner {
+  display: flex;
+  max-width: 1170px;
+  margin: 0 auto;
+  height: inherit;
+  justify-content: space-between;
+}
+
+.navbar-nav {
+  display: flex;
+}
+
+.navbar-nav.-primary {
+  flex-grow: 1;
+  padding-left: 30%;
+}
+
+.navbar .nav-link {
+  display: inline-flex;
+  color: #fff;
+  white-space: nowrap;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 0 12px;
+  align-items: center;
+}
+
+.navbar .nav-link.-active {
+  background-color: #ba4717;
+}
+
+.navbar .nav-link:not(.-active):hover {
+  background-color: #101215;
+}
+
+.navbar-nav > .btn {
+  align-self: center;
+  margin: 0 0 0 8px;
+  border: 1px solid #4fae33;
+}
+
+.btn.btn--secondary {
+  border: 1px solid #fff;
+  background-color: hsla(0, 0%, 100%, .05);
+}
+
+.btn.-xs {
+  line-height: 26px;
+  font-size: 12px;
+  border-radius: 2px;
+}
+
+.btn.-xs > .btn__text {
+  padding: 0 12px;
+  color: #fff;
+  letter-spacing: 0;
+}
+
+.login-btn {
+  outline: none;
+  font-size: inherit;
+  font-family: inherit;
+  letter-spacing: inherit;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin: 0;
+  background-color: #4fae33;
+  color: #fff;
+  border-radius: 4px;
+  padding-left: 14px;
+  padding-right: 14px;
+}

@@ -1,0 +1,2 @@
+recursive-include online_market/**/templates/ *
+recursive-include **/static/ *

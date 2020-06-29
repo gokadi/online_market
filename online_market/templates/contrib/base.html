@@ -1,0 +1,38 @@
+{% load header sidebar static %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/contrib/base.css' %}">
+        {% block extra_styles %}{% endblock %}
+        <meta charset="UTF-8" />
+        <title>{% spaceless %}{{ page_title }}{% endspaceless %}</title>
+    </head>
+    <body>
+        <div class="layout">
+            <div class="layout__header">
+                {% block header %}
+                    {% header request %}
+                {% endblock %}
+            </div>
+
+            <div class="layout__sidebar">
+                {% block page_sidebar %}
+                    {% sidebar request %}
+                {% endblock %}
+            </div>
+
+            <div class="layout__body">
+                {% block page_body %}{% endblock %}
+            </div>
+
+            <div class="layout__footer">
+                {% block footer %}
+                    {% include 'contrib/footer.html' %}
+                {% endblock %}
+            </div>
+        </div>
+
+        {# todo remove block scripts? #}
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

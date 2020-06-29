@@ -1,0 +1,45 @@
+{% extends 'contrib/base.html' %}
+{% load static profile_sidebar get_product_amount_in_order %}
+
+{% block extra_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/users/orders.css' %}">
+{% endblock %}
+
+{% block page_sidebar %}
+    {% profile_sidebar request %}
+{% endblock %}
+
+{% block page_body %}
+    <main class="cart-content">
+        <h2 class="cart-title">Заказы</h2>
+        {% if orders %}
+            <table class="cart-products">
+                <tr>
+                    <th>Товары</th>
+                    <th>Сумма</th>
+                    <th>Статус заказа</th>
+                    <th>Дата заказа</th>
+                </tr>
+                {% for order in orders %}
+                <tr>
+                    <td>
+                        <ul>
+                            {% for product in order.products.all %}
+                                <li>
+                                    {{ product.name }}: {% get_product_amount_in_order product.pk order.pk %} шт по {{ product.price }}₽
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>{{ order.total_price }}₽</td>
+                    <td>{{ order.prettified_status }}</td>
+                    <td>{{ order.date_created}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>Заказы еще не совершались</p>
+        {% endif %}
+    </main>
+{% endblock %}
+

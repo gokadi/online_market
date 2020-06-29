@@ -1,0 +1,62 @@
+{% extends 'contrib/base.html' %}
+{% load static %}
+
+{% block extra_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/orders/order.css' %}">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+        });
+    </script>
+{% endblock %}
+
+{% block page_sidebar %}{% endblock %}
+
+{% block page_body %}
+    <main>
+        {% if not is_order_successful %}
+            <h2 class="order-title">Оформление заказа</h2>
+            <form class="order" method="POST" action="{% url 'orders:make_order' %}">
+                {% csrf_token %}
+                {% if not products %}
+                    <p>В корзине нет товаров</p>
+                {% else %}
+                    <div style="margin-bottom: 50px">
+                        <table class="order-products">
+                            <tr>
+                                <th>Товар</th>
+                                <th>Цена</th>
+                                <th>Количество</th>
+                            </tr>
+                            {% for product in products %}
+                            <tr>
+                                <td>{{ product.0.name }}</td>
+                                <td>{{ product.0.price }}₽</td>
+                                <td>{{ product.1 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        <p>
+                            Итоговая сумма: {{ total_price }}
+                        </p>
+                        {% if not address %}
+                            <p>
+                                Заполните адрес в <a href="{% url 'users:profile_address' %}">профиле</a>
+                            </p>
+                        {% else %}
+                            <p>Адрес: {{ address }}</p>
+                            <button class="order-make-order-btn" type="submit">
+                                <span class="">
+                                    Оформить
+                                </span>
+                            </button>
+                        {% endif %}
+                    </div>
+
+                {% endif %}
+            </form>
+    {% else %}
+        <h2 class="order-title">Заказ успешно оформлен!</h2>
+    {% endif %}
+    </main>
+{% endblock %}

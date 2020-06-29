@@ -1,0 +1,80 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/contrib/sidebar.css' %}">
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position: absolute; width: 0; height: 0">
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="icon-dropdown"><path d="M13.2 4L8 9.2 2.8 4 1 6l7 7 7-7-1.8-2z"></path></symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="icon-dropup"><path d="M2.8 12L8 6.8l5.2 5.2 1.8-2-7-7-7 7 1.8 2z"></path></symbol>
+</svg>
+
+<aside class="sidebar">
+    <h3 class="sidebar-main__workspace__title">
+        Меню
+    </h3>
+    <div class="sidebar">
+        {% for item in items %}
+            {% if item.items %}
+                <div
+                    class="sidebar__group js-sidebar-group"
+                    {% if item.is_active %}data-is-open=""{% endif %}
+                >
+                <span class="sidebar__group-title js-sidebar-parent_category">
+                    {% spaceless %}
+                        <span class="sidebar__group-title__text">
+                            {{ item.label }}
+                        </span>
+                        <svg class="icon -s down">
+                            <use href="#icon-dropdown"></use>
+                        </svg>
+                        <svg class="icon -s up">
+                            <use href="#icon-dropup"></use>
+                        </svg>
+                    {% endspaceless %}
+                </span>
+
+                    <div class="sidebar__group-links">
+                        {% for item in item.items %}
+                            <a
+                                class="sidebar__group-link{% if item.is_active %} sidebar__group-link--active{% endif %}"
+                                href="{{ item.raw_url }}"
+                            >
+                                <span class="sidebar__group-link__text">
+                                    {{ item.label }}
+                                </span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <a
+                    class="sidebar__link{% if item.is_active %} sidebar__link--active{% endif %}"
+                    href="{{ item.raw_url }}"
+                >
+                    <span class="sidebar__link__text">
+                        {{ item.label }}
+                    </span>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</aside>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const categoryGroups = document.querySelectorAll('.js-sidebar-group');
+      categoryGroups.forEach((group) => {
+        const parentCatetgoryEl = group.querySelector(
+          '.js-sidebar-parent_category'
+        );
+        if (parentCatetgoryEl) {
+          parentCatetgoryEl.addEventListener('click', () => {
+             if (group.hasAttribute('data-is-open')) {
+                group.removeAttribute('data-is-open');
+              } else {
+                group.setAttribute('data-is-open', '');
+              }
+          });
+        }
+      });
+    });
+</script>

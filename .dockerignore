@@ -1,0 +1,8 @@
+*
+!Makefile
+!setup.*
+!MANIFEST.in
+!online_market/*
+!manage.py
+!docker/online_market/files/*
+!dist/

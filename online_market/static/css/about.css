@@ -1,0 +1,12 @@
+.about-content {
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 70px 25px 100px 25px;
+    color: #333;
+}
+
+.about-content-title {
+    text-align: center;
+}

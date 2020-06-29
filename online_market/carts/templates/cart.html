@@ -1,0 +1,70 @@
+{% extends 'contrib/base.html' %}
+{% load static %}
+
+{% block extra_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carts/cart.css' %}">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0];
+            const removeButtons = document.querySelectorAll('.js-remove_from_cart');
+            removeButtons.forEach((removeButton) => {
+              const productId = removeButton.getAttribute('data-product-id');
+              removeButton.addEventListener('click', async() => {
+                const formData = new FormData();
+                  formData.append('csrfmiddlewaretoken', csrfToken.value);
+                  formData.append('product_id', productId);
+
+                  const response = await fetch('{% url 'carts:remove' %}', {
+                    method: 'POST',
+                    mode: 'same-origin',
+                    cache: 'no-cache',
+                    body: formData,
+                  });
+
+                  if (response.status !== 201) {
+                    throw new Error(await response.text());
+                  } else {
+                    alert('Товар удален из корзины!');
+                    window.location.reload();
+                  }
+              });
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block page_sidebar %}{% endblock %}
+
+{% block page_body %}
+    <main>
+        <h2 class="cart-title">Корзина</h2>
+        <div class="cart">
+            {% csrf_token %}
+            {% if not products %}
+                <p>В корзине нет товаров</p>
+            {% else %}
+                <div style="margin-bottom: 50px">
+                    <table class="cart-products">
+                        <tr>
+                            <th>Товар</th>
+                            <th>Цена</th>
+                            <th>Удалить из корзины</th>
+                        </tr>
+                        {% for product in products %}
+                        <tr>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.price }}₽</td>
+                            <td class="cart-remove js-remove_from_cart" data-product-id="{{ product.pk }}">Удалить из корзины</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <a class="cart-make-order-btn" href="{% url 'orders:make_order' %}" type="submit">
+                        <span class="">
+                            Оформить заказ
+                        </span>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}

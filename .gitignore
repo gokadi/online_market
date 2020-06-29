@@ -1,0 +1,15 @@
+/.idea
+__pycache__
+/.env
+/venv
+/*.sqlite3
+.cache/
+/.coverage
+/.eggs
+/.wheels
+/online_market.egg-info
+/.pytest_cache
+/.mypy_cache
+/.tox
+django.mo
+/static

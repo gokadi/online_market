@@ -1,0 +1,8 @@
+{% spaceless %}
+    <a
+        class="nav-link {% if item.is_active %} -active{% endif %}"
+        href="{{ item.raw_url }}"
+    >
+        {{ item.label }}
+    </a>
+{% endspaceless %}

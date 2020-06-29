@@ -1,0 +1,19 @@
+.footer {
+  background: #2f3439;
+  font-size: 12px;
+  padding-top: 25px;
+  color: #999;
+}
+
+.copyright {
+  padding: 25px 0;
+  color: #999;
+  font-size: 11px;
+}
+
+.text {
+  max-width: 240px;
+  line-height: 1.2em;
+  font-size: 13px;
+  margin-left: 16px;
+}

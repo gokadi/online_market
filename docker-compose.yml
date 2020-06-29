@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/online_market/Dockerfile
+    environment:
+      - DEBUG=False
+    env_file:
+      - app.env
+    depends_on:
+      - prepare_database
+
+  nginx:
+    build:
+      context: docker/nginx
+    depends_on:
+      - app
+    ports:
+      - 80:80
+      - 443:443
+
+  postgres:
+    image: postgres:9-alpine
+    expose:
+      - 5432
+    env_file:
+      - app.env
+
+  prepare_database:
+    image: online_market_app:latest
+    command: /bin/sh -c 'django-admin migrate'
+    env_file:
+      - app.env
+    depends_on:
+      - postgres
