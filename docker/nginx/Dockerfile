@@ -8,6 +8,7 @@ COPY default.crt /etc/nginx
 COPY default.key /etc/nginx
 
 COPY --from=backend /app/static/ /app/static/
+COPY --from=backend /app/media/ /app/media/
 
 
 CMD ["nginx", "-g", "daemon off;"]

@@ -17,7 +17,10 @@ ARG APP_DIR=/app
 RUN pip install pip setuptools -U
 
 ENV STATIC_ROOT ${APP_DIR}/static/
+ENV MEDIA_ROOT ${APP_DIR}/media/
 RUN mkdir -p ${STATIC_ROOT}
+RUN mkdir -p ${MEDIA_ROOT}
+RUN chmod -R 777 ${MEDIA_ROOT}
 
 WORKDIR /tmp/setup/
 

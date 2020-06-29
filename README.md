@@ -6,8 +6,13 @@ $ docker-compose build
 
 
 ```
-$ docker-compose up --build
+$ docker-compose up
+$ docker-compose up
 ```
+^ call it twice 
+(Database starts slower than prepare_database does. Fix is in todo: 
+*make wait script to run `prepare_database` image*.)
+
 
 In another tab do:
 ```
@@ -34,3 +39,4 @@ ToDos:
 * serve media from nginx
 * refactor nginx.conf (remove duplicates)
 * cleanup code
+* make wait script to run `prepare_database` image
