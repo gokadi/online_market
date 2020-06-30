@@ -26,8 +26,8 @@ class Handle443Redirects:
         self.get_response = get_response
 
     def __call__(self, request: WSGIRequest) -> HttpResponseBase:
-        if settings.DEBUG:
-            return self.get_response(request)
+#         if settings.DEBUG:
+#             return self.get_response(request)
 
         request_uri = request.build_absolute_uri(
             request.get_full_path()
