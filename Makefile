@@ -3,8 +3,6 @@ all: test
 #: interpreter version (ex.: 3.6) or use all current available
 PYTHON ?= __all_available__
 
-OPEN = $(shell which kde-open || which xdg-open || which gnome-open || which open)
-
 # -- Tests --------------------------------------------------------------------
 
 TEST_COMMAND = tox --recreate
