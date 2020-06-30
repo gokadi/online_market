@@ -6,7 +6,9 @@ services:
       context: .
       dockerfile: docker/online_market/Dockerfile
     environment:
-      - DEBUG=False
+      # Need to serve media files by django app
+      # (see ToDos in README - will serve media by nginx later)
+      - DEBUG=True
     env_file:
       - app.env
     depends_on:
@@ -30,7 +32,13 @@ services:
 
   prepare_database:
     image: online_market_app:latest
-    command: /bin/sh -c 'django-admin migrate'
+    command:
+      - /bin/sh
+      - -c
+      - |
+        /wait-for-it/wait-for-it.sh postgres:5432
+        django-admin migrate
+        django-admin loaddata /app/db.json
     env_file:
       - app.env
     depends_on:

@@ -1,5 +1,7 @@
 *
 !Makefile
+!db.json
+!media/*
 !setup.*
 !MANIFEST.in
 !online_market/*

@@ -6,8 +6,6 @@ omit =
     */urls.py
     */apps.py
     */migrations/*
-    */tests/*
-    */management/*
 
     ./online_market/wsgi.py
     ./online_market/settings.py

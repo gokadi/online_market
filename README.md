@@ -1,27 +1,29 @@
 How to run:
 
+For the first run do:
 ```
 $ docker-compose build
-```
-
-
-```
-$ docker-compose up
 $ docker-compose up
 ```
-^ call it twice 
-(Database starts slower than prepare_database does. Fix is in todo: 
-*make wait script to run `prepare_database` image*.)
 
+This will run all needed containers and app will be accessible on `0.0.0.0:80`.
+Also, dump will be loaded. 
+For clean run (empty db with only dump loaded), before every new application start do: 
 
-In another tab do:
 ```
-$ docker-compose exec app /bin/sh
-$ django-admin createsuperuser
+$ docker-compose rm
 ```
 
-Follow the instructions.
-Then go to `http://0.0.0.0:8000/admin/`, login, add some categories, 
+You can login with these creds:
+
+```
+gokadi@yandex.ru
+qwe123qwe
+```
+
+This is superuser with access to the admin panel (`/admin/`).
+
+Go to `http://0.0.0.0:8000/admin/`, add some categories, 
 subcategories & products.
 Then you can go back to `0.0.0.0:8000` and make orders. Don't forget to fill in 
 the address here: `0.0.0.0:8000/users/profile_address/`
@@ -34,9 +36,9 @@ from `docker/nginx` to locally trusted certs or try in older Chrome version
 ToDos:
 ======
 
-* add tests (see tox.ini)
+* add tests (see tox.ini & Makefile)
 * use redis for sessions
-* serve media from nginx
+* serve media from nginx (add volume to docker-compose)
 * refactor nginx.conf (remove duplicates)
 * cleanup code
-* make wait script to run `prepare_database` image
+* prettify css
