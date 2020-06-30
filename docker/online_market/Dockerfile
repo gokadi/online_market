@@ -5,9 +5,6 @@ FROM python:3.7 AS build
 
 WORKDIR /build/
 COPY ./ ./
-#RUN apt-get -qq update \
-#    && apt-get -qq install --no-install-recommends -y \
-#    postgresql-dev gcc python3-dev musl-dev
 RUN make build_dist
 
 # -- App ----------------------------------------------------------------------
