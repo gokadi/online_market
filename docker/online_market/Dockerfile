@@ -1,6 +1,5 @@
 
 # -- Build --------------------------------------------------------------------
-# hadolint ignore=DL3007
 FROM python:3.7 AS build
 
 WORKDIR /build/
